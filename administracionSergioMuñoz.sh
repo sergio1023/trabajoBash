@@ -4,7 +4,7 @@
 #echo  $a
 
 function fpermisos(){
-	ruta=$(yad --width=400 --height=50 --title "Busca tu archivo" --form --center --field=fichero:FL \
+	ruta=$(yad --width=400 --height=50 --title "Selecciona archivo" --form --center --file \
 	--column="") 2> /dev/null
 	permisos=$(yad --width=400 --height=50 --title "Establece permisos" --center --text-align=center \
 	--text="Establece permisos al fichero" --entry --button=Establecer:0 --button=Cancelar:1)
@@ -14,21 +14,31 @@ function fpermisos(){
 		if [ $ans -eq 0 ]
 		then
 			chmod $permisos $ruta
-			echo "Permisos establecidos"
+			yad --width=400 --height=50 --center --text-align=center --column="" --text="Permisos establecidos"
 		else
-			echo "No quiere continuar"
+			while [ $ans -eq 1 ]
+			do
+				echo "Ha habido un error al establecer permisos"
+				ruta=$(yad --width=400 --height=50 --title "Selecciona archivo" --form --center --file \
+				--column="") 2> /dev/null
+				permisos=$(yad --width=400 --height=50 --title "Establece permisos" --center --text-align=center \
+				--text="Establece permisos al fichero" --entry --button=Establecer:0 --button=Cancelar:1)
+			done
 		fi
-	resultado=$(yad --width=400 --height=50 --title "Permisos del archivo" --center )
+		
+		comandols=$(ls -l $ruta)
+	resultado=$(yad --width=400 --height=300 --title "Permisos del archivo" --center --list \
+	--column="" --column="" Permisos: ${comandols})
  }
 function ftareas(){
 	echo "Tarea"
  }
 function fborrar(){
-	echo "borrar"
-	borrar=$(yad --width=400 --height=350 --title "Archivo a borrar" --form --center --field=fichero:FL \
+	borrar=$(yad --width=300 --height=300 --title "¿Qué quieres borrar?" --form --center --file \
 	--column="" ) 2> /dev/null
 	rm -r $borrar
-	echo "Has borrado el archivo" $borrar
+	resultadoborrar=$(yad --width=500 --height=300 --title "Archivo borrado" --center --text-align=center --list  \
+	--column="" --text="Has borrado:" ${borrar})
 }
 function frecuperar(){
 	echo "recuperar"
