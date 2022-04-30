@@ -37,11 +37,15 @@ function fborrar(){
 	borrar=$(yad --width=300 --height=300 --title "¿Qué quieres borrar?" --form --center --file \
 	--column="" ) 2> /dev/null
 	rm -r $borrar
+	echo "Mandar el archivo a alguna carpeta"
 	resultadoborrar=$(yad --width=500 --height=300 --title "Archivo borrado" --center --text-align=center --list  \
 	--column="" --text="Has borrado:" ${borrar})
 }
 function frecuperar(){
-	echo "recuperar"
+	recuperar=$(yad --width=400 --height=50 --title "Recuperación de archivos" --center --text-align=center \
+	--form --file --column="")
+	
+	
  }
 function salir (){
       exit 0
