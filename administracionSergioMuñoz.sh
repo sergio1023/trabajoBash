@@ -18,7 +18,7 @@ function fpermisos(){
 		else
 			while [ $ans -eq 1 ]
 			do
-				echo "Ha habido un error al establecer permisos"
+				yad --width=400 --height=50 --center --text-align=center --column="" --text="Ha habido un error al establecer permisos, pruebe otra vez"
 				ruta=$(yad --width=400 --height=50 --title "Selecciona archivo" --form --center --file \
 				--column="") 2> /dev/null
 				permisos=$(yad --width=400 --height=50 --title "Establece permisos" --center --text-align=center \
@@ -27,8 +27,9 @@ function fpermisos(){
 		fi
 		
 		comandols=$(ls -l $ruta)
-	resultado=$(yad --width=400 --height=300 --title "Permisos del archivo" --center --list \
-	--column="" --column="" Permisos: ${comandols})
+		echo $comandols
+	resultado=$(yad --width=400 --height=300 --title "Permisos finales del archivo" --center  \
+	--text="${comandols}")
  }
 function ftareas(){
 	echo "Tarea"
@@ -36,8 +37,7 @@ function ftareas(){
 function fborrar(){
 	borrar=$(yad --width=300 --height=300 --title "¿Qué quieres borrar?" --form --center --file \
 	--column="" ) 2> /dev/null
-	rm -r $borrar
-	echo "Mandar el archivo a alguna carpeta"
+	mv $borrar /basura
 	resultadoborrar=$(yad --width=500 --height=300 --title "Archivo borrado" --center --text-align=center --list  \
 	--column="" --text="Has borrado:" ${borrar})
 }
