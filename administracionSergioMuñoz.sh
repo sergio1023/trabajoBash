@@ -45,13 +45,11 @@ function ftareas(){
 function fborrar(){
 	borrar=$(yad --width=300 --height=300 --title "¿Qué quieres borrar?" --form --center --file \
 	--column="" ) 2> /dev/null
-	mv $borrar /Escritorio/trabajoBash/basura
-	#type  /Escritorio/trabajoBash/basura/ruta.txt >> $borrar Almacenar en ruta.txt la ruta que vamos a borrar 
-	#nombreborrar = cutd -d "/ > ruta.txt" filtrar por el nombre de archivo
-	concatenaruta="ruta$nombreborrar"
-	#rename ruta.txt $concatenaruta concatenarlo para que quede un nombre adecuado
-	
-	
+	mv $borrar ~/Escritorio/trabajoBash/basura
+	echo "$borrar" > basura/ruta.txt
+	myfile="$borrar"
+	concatenaruta="rutantigua${myfile##*/}"
+	mv basura/ruta.txt basura/$concatenaruta
 	resultadoborrar=$(yad --width=500 --height=300 --title "Archivo borrado" --center --text-align=center --list  \
 	--column="" --text="Has borrado:" ${borrar})
 }

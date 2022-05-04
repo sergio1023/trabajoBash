@@ -6,4 +6,24 @@ ruta=$(yad --width=400 --height=50 --title "Busca tu archivo" --form --center --
 comandoll=$(ls -l $ruta)
 echo "$comandoll"
 
-yad --width=400 --height=400 --title "Permisos del archivo" --center --list --column="" --column="" Permisos ${comandoll}
+yad --width=400 --height=400 --title "Permisos del archivo" --center --list --column="" --column="" --text="${comandoll}"
+
+nombre="soysergi.txt"
+concatena="ruta$nombre"
+echo $concatena
+
+rm archivo.txt
+echo "$ruta" > archivo.txt
+
+ls -l
+
+mv archivo.txt $concatena
+
+ls -l
+
+myfile="$ruta"
+echo "${myfile%/*}"
+concat="ruta${myfile##*/}"
+echo $concat
+
+echo "$concat" > ~/Escritorio/trabajoBash/basura/veamos.txt
