@@ -56,15 +56,8 @@ function fpermisos(){
 			
  }
 function ftareas(){
-	tareas=$(yad --form \ width="500" height="500"
-            --title="Especifica la tarea programada" \
-            --text="Introduce los siguientes datos" \
-            --center \
-            --field="MINUTOS" \
-            --field="HORAS" \
-            --field="DÍAS DEL MES" \
-            --field="MES" \
-            --field="AÑO") >> /etc/crontab
+	tareas=$(yad --form  width=500 height=500 --title "Especifica la tarea programada" --text="Ponga '*' para no seleccionar ninguna hora, mes etc..." \
+            --center  --field="MINUTOS" --field="HORAS" --field="DÍAS DEL MES" --field="MES" --field="AÑO") >> /etc/crontab
             
             
             
