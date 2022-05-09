@@ -56,14 +56,29 @@ function fpermisos(){
 			
  }
 function ftareas(){
-	tareas=$(yad --form  width=500 height=500 --title "Especifica la tarea programada" --text="Ponga '*' para no seleccionar ninguna hora, mes etc..." \
-            --center  --field="MINUTOS" --field="HORAS" --field="DÍAS DEL MES" --field="MES" --field="AÑO") >> /etc/crontab
+	
+	chmod 777 /etc/crontab
+	tareas=$(yad  width=700 height=700 --form --title "Especifica la tarea programada" --text="Ponga '*' para no seleccionar ninguna hora, mes etc..." \
+            --center  --form --field="Minutos" --field="Horas" --field="Días del mesS" --field="Mes" --field="Dia de la semana" --field="Descripción" --field="Comando" --field="Editar")   
             
+            ans=$?
             
-            
-            
-            
-            
+            if [ $ans -eq 0 ];
+				then
+					IFS="|" read -r -a array <<< "$tareas"
+					minutos=${array[0]}
+					hora=${array[1]}
+					diames=${array[2]}
+					mes=${array[3]}
+					diasemana=${array[4]}
+					descripcion=${array[5]}
+					comando=${array[6]}
+					editar=$(echo "$minutos $hora $diames $mes $diasemana $USER $comando" >> /etc/crontab )
+					ok=$(yad --center --info --title= "Tareas programadas" --text="Tarea editada correctamente")
+			else
+					cancelar=$(yad --center --info --title="Error en la tarea" --image="stop" --text="Pruebe otra vez")
+			fi
+                           
             op1="<span weight=\"bold\" font=\"12\">Gestion permisos</span>"
 			op2="<span weight=\"bold\" font=\"12\">Tareas programadas</span>"
 			op3="<span weight=\"bold\" font=\"12\">Borrar ficheros</span>"
@@ -120,6 +135,13 @@ function frecuperar(){
 	pregunta=$(yad --width=400 --height=50 --title "¿Que desea hacer?" --center --text-align=center \
 			--text="Escriba borrar o recuperar" --entry --button=Establecer:0)
 			
+			while [ $pregunta != "borrar" || $pregunta != "recuperar" ];
+					do
+						yad --width=400 --height=50 --center --text-align=center --column="" --text="Debe escribir borrar o recuperar"
+						pregunta=$(yad --width=400 --height=50 --title "¿Que desea hacer?" --center --text-align=center \
+						--text="Escriba borrar o recuperar" --entry --button=Establecer:0)
+					done
+			
 			if [ $pregunta = "borrar" ];
 				then
 					myfileborrar="$recuperar"
@@ -134,13 +156,6 @@ function frecuperar(){
 					#mv $recuperar #ruta guardada en los archivos de rutaantigua
 					#comandolsl="ls -l ruta de archivo recuperado"
 					#yad --width=550 --height=300 --title "Archivo recuperado con éxito" --text="Contenido del directorio actual" --center --text="${comandolsl}"
-				else
-					while [ $pregunta != "borrar" || $pregunta != "recuperar" ];
-					do
-						yad --width=400 --height=50 --center --text-align=center --column="" --text="Debe escribir borrar o recuperar"
-						pregunta=$(yad --width=400 --height=50 --title "¿Que desea hacer?" --center --text-align=center \
-						--text="Escriba borrar o recuperar" --entry --button=Establecer:0)
-					done
 			fi
 				
 			 
