@@ -1,1 +1,1 @@
-/home/usuario/Escritorio/trabajoBash/rutasoysergi.txt
+/home/usuario/Escritorio/trabajoBash/santi.txt

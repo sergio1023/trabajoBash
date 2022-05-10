@@ -30,3 +30,10 @@ concat="ruta${myfile##*/}"
 echo $concat
 
 echo "$concat" > ~/Escritorio/trabajoBash/basura/veamos.txt
+
+cd basura/
+rutaca=$(cat rutantiguapermisos.txt)
+echo $rutaca
+
+cadena=$rutaca
+echo "${cadena%/*}"
