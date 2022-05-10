@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function fpermisos(){
-	ruta=$(yad --width=400 --height=50 --title "Selecciona archivo" --form --center --file \
+	ruta=$(yad --width=100 --height=150 --title "Selecciona archivo" --form --center --file \
 	--column="") 2> /dev/null
 	permisospropietarios=$(yad --width=500 --height=20 --title "Permisos para propietarios" --center --text-align=left \
 	--text="Guía de permisos:
@@ -14,7 +14,7 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 ) 2> /dev/null
 	while [[ $permisospropietarios -gt 7  ||  $permisospropietarios -eq "" ]]
 		do
-			yad --width=400 --height=50 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
 			permisospropietarios=$(yad --width=400 --height=50 --title "Permisos para propietarios" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
@@ -26,7 +26,7 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 		done
 	
-	permisosgrupos=$(yad --width=400 --height=50 --title "Permisos para grupos" --center --text-align=center \
+	permisosgrupos=$(yad --width=100 --height=150 --title "Permisos para grupos" --center --text-align=center \
 	--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -37,8 +37,8 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 	while [[ $permisosgrupos -gt 7  || $permisosgrupos -eq "" ]]
 		do
-			yad --width=400 --height=50 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
-			permisosgrupos=$(yad --width=400 --height=50 --title "Permisos para grupos" --center --text-align=center \
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
+			permisosgrupos=$(yad --width=100 --height=150 --title "Permisos para grupos" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -48,7 +48,7 @@ function fpermisos(){
 	6 = lectura y escritura
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 		done
-	permisosotros=$(yad --width=400 --height=50 --title "Permisos para otros" --center --text-align=center \
+	permisosotros=$(yad --width=100 --height=150 --title "Permisos para otros" --center --text-align=center \
 	--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -59,8 +59,8 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 	while [[ $permisosotros -gt 7  || $permisosotros = "" ]]
 		do
-			yad --width=400 --height=50 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
-			permisosotros=$(yad --width=400 --height=50 --title "Permisos para otros" --center --text-align=center \
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
+			permisosotros=$(yad --width=100 --height=150 --title "Permisos para otros" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -105,7 +105,7 @@ function ftareas(){
             
             ans=$?
             
-            if [ $ans -eq 0 ];
+            if [ $ans -eq 0 ]
 				then
 					IFS="|" read -r -a array <<< "$tareas"
 					minutos=${array[0]}
@@ -118,7 +118,7 @@ function ftareas(){
 					editar=$(echo "$minutos $hora $diames $mes $diasemana $USER $comando" >> /etc/crontab )
 					ok=$(yad --center --info --title= "Tareas programadas" --text="Tarea editada correctamente")
 			else
-					cancelar=$(yad --center --info --title="Error en la tarea" --image="stop" --text="Pruebe otra vez")
+					cancelar=$(yad --center --info --title="Error en la tarea" --image="stop" --text="Pruebe otra vez, la tarea no se completó")
 			fi
                            
             op1="<span weight=\"bold\" font=\"12\">Gestion permisos</span>"
@@ -172,20 +172,26 @@ op=`echo $op | cut -f1 -d"|"`
 }
 function frecuperar(){
 	cd basura/
-	recuperar=$(yad --width=400 --height=50 --title "Recuperación o borrado permanente de archivos" --form --center --file  \
-	--column="" --alpha --palette )
-	cd ..
-	pregunta=$(yad --width=400 --height=90 --title "¿Que desea hacer?" --center --text-align=left \
+	recuperar=$(yad --width=230 --height=230 --title "Recuperación o borrado permanente de archivos" --form  --center --text-align=left --file  \
+	--column="" )
+	pregunta=$(yad --width=230 --height=230 --title "¿Que desea hacer?" --center --text-align=left \
 			--text="
 			Escriba borrar para borrar definitivamente el archivo
 			Escriba dantiguo para recuperar en la ruta antigua
 			Escriba dactual para recuperar en la ruta actual" --entry --button=Establecer:0)
 			
-			while [[ $pregunta != "borrar" || $pregunta != "dantiguo" || $pregunta != "dactual" ]]
+			while [[[[ $pregunta != "borrar" || $pregunta != "dantiguo" || $pregunta != "dactual" || $pregunta = "" ]]]]
 					do
-						yad --width=400 --height=50 --center --text-align=center --column="" --text="Debe escribir borrar o recuperar"
-						pregunta=$(yad --width=400 --height=50 --title "¿Que desea hacer?" --center --text-align=center \
-						--text="Escriba borrar o recuperar" --entry --button=Establecer:0)
+						advertencia=$(yad --width=230 --height=230 --center  --text-align=left --column="" \
+						 --text="
+						Escriba borrar para borrar definitivamente el archivo
+						Escriba dantiguo para recuperar en la ruta antigua
+						Escriba dactual para recuperar en la ruta actual")
+						pregunta=$(yad --width=230 --height=230 --title "¿Que desea hacer?" --center  --text-align=left \
+						--text="
+						Escriba borrar para borrar definitivamente el archivo
+						Escriba dantiguo para recuperar en la ruta antigua
+						Escriba dactual para recuperar en la ruta actual" --entry --button=Establecer:0)
 					done
 			
 			if [ $pregunta = "borrar" ]
@@ -193,27 +199,30 @@ function frecuperar(){
 					myfileborrar="$recuperar"
 					concatenaborrar="rutantigua${myfileborrar##*/}"
 					rm -r $recuperar
-					rm -r basura/$concatenaborrar
-					comandolsbasura=$(ls -l basura)
+					rm -r $concatenaborrar
+					comandolsbasura=$(ls -l)
 					yad --width=550 --height=300 --title "Contenido de la basura" --center --text="${comandolsbasura}"
 				elif [ $pregunta = "dantiguo" ]
 					then
 					# ver si se cumplen los while y ver si coge bien la ruta
-					rutantes=$(cat $recuperar)
-					cadena=$rutantes
-					cadena2=${cadena%/*}
+					rutantes="${recuperar##*/}"
+					cadena=$(cat rutantigua$rutantes)
+					cadena2="${cadena%/*}"
 					mv $recuperar $cadena2
 					comandolsl=$(ls -l $cadena2)
+					borrarcadena="rutantigua${recuperar##*/}"
+					rm -r basura/$borrarcadena
 					yad --width=550 --height=300 --title "Archivo recuperado con éxito" --center --text="
 					Archivo recuperado en directorio antiguo
 					${comandolsl}"
 				elif [ $pregunta = "dactual" ]
 					then
+						cd ..
 						mv $recuperar .
-						comandolsactual="ls -l ."
+						comandolsactual="ls -l"
 						yad --width=550 --height=300 --title "Archivo recuperado con éxito" --center --text="
 						Archivo recuperado en directorio actual
-						${comandolsactual}"
+						${comandolsactual}"						
 				fi
 				
 			 

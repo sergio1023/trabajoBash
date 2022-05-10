@@ -34,6 +34,13 @@ else
     echo "continua capullo"
 fi     
 
+cd basura/
+ruta=$(yad --width=400 --height=50 --title "Busca tu archivo" --form --center --file \
+	--column="") 2> /dev/null
+	
+	rutac="${ruta##*/}"
+	mira=$(cat rutantigua$rutac)
+	echo $mira
 
 
             
