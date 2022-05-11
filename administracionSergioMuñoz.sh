@@ -176,25 +176,33 @@ function frecuperar(){
 	--column="" )
 	pregunta=$(yad --width=230 --height=230 --title "¿Que desea hacer?" --center --text-align=left \
 			--text="
-			Escriba borrar para borrar definitivamente el archivo
-			Escriba dantiguo para recuperar en la ruta antigua
-			Escriba dactual para recuperar en la ruta actual" --entry --button=Establecer:0)
+Escriba <b>borrar</b> para borrar definitivamente el archivo
+
+Escriba <b>dantiguo</b> para recuperar en la ruta antigua
+
+Escriba <b>dactual</b> para recuperar en la ruta actual" --entry --button=Establecer:0)
 			
-			while [[[[ $pregunta != "borrar" || $pregunta != "dantiguo" || $pregunta != "dactual" || $pregunta = "" ]]]]
+			
+#Variable de estado  ok='n' si esto es distinto de esto sacamelo
+while [[ ( $pregunta != "borrar" ) && ( $pregunta != "dantiguo" ) && ( $pregunta != "dactual" ) && ( $pregunta = "" ) ]]
 					do
 						advertencia=$(yad --width=230 --height=230 --center  --text-align=left --column="" \
 						 --text="
-						Escriba borrar para borrar definitivamente el archivo
-						Escriba dantiguo para recuperar en la ruta antigua
-						Escriba dactual para recuperar en la ruta actual")
+Escriba <b>borrar</b> para borrar definitivamente el archivo
+
+Escriba <b>dantiguo</b> para recuperar en la ruta antigua
+
+Escriba <b>dactual</b> para recuperar en la ruta actual")
 						pregunta=$(yad --width=230 --height=230 --title "¿Que desea hacer?" --center  --text-align=left \
 						--text="
-						Escriba borrar para borrar definitivamente el archivo
-						Escriba dantiguo para recuperar en la ruta antigua
-						Escriba dactual para recuperar en la ruta actual" --entry --button=Establecer:0)
-					done
-			
-			if [ $pregunta = "borrar" ]
+Escriba <b>borrar</b> para borrar definitivamente el archivo
+
+Escriba <b>dantiguo</b> para recuperar en la ruta antigua
+
+Escriba <b>dactual</b> para recuperar en la ruta actual" --entry --button=Establecer:0)
+done
+
+if [ $pregunta = "borrar" ]
 				then
 					myfileborrar="$recuperar"
 					concatenaborrar="rutantigua${myfileborrar##*/}"
@@ -204,29 +212,33 @@ function frecuperar(){
 					yad --width=550 --height=300 --title "Contenido de la basura" --center --text="${comandolsbasura}"
 				elif [ $pregunta = "dantiguo" ]
 					then
-					# ver si se cumplen los while y ver si coge bien la ruta
 					rutantes="${recuperar##*/}"
 					cadena=$(cat rutantigua$rutantes)
 					cadena2="${cadena%/*}"
+					cadena3="rutantigua$rutantes"
 					mv $recuperar $cadena2
 					comandolsl=$(ls -l $cadena2)
-					borrarcadena="rutantigua${recuperar##*/}"
-					rm -r basura/$borrarcadena
+					cd basura/
+					rm -r $cadena3
 					yad --width=550 --height=300 --title "Archivo recuperado con éxito" --center --text="
 					Archivo recuperado en directorio antiguo
 					${comandolsl}"
+					cd ..
 				elif [ $pregunta = "dactual" ]
 					then
+						myfileborrar2="$recuperar"
+						concatenaborrar2="rutantigua${myfileborrar2##*/}"
+						rm -r $concatenaborrar2
 						cd ..
 						mv $recuperar .
-						comandolsactual="ls -l"
+						comandolsactual=$(ls -l)
 						yad --width=550 --height=300 --title "Archivo recuperado con éxito" --center --text="
 						Archivo recuperado en directorio actual
-						${comandolsactual}"						
-				fi
+						${comandolsactual}"	
+					fi
+			
 				
-			 
-				
+							 				
 				op1="<span weight=\"bold\" font=\"12\">Gestion permisos</span>"
 				op2="<span weight=\"bold\" font=\"12\">Tareas programadas</span>"
 				op3="<span weight=\"bold\" font=\"12\">Borrar ficheros</span>"
