@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 function fpermisos(){
-	ruta=$(yad --width=100 --height=150 --title "Selecciona archivo" --form --center --file \
+	ruta=$(yad --width=300 --height=200 --title "Selecciona archivo" --form --center --file \
 	--column="") 2> /dev/null
-	permisospropietarios=$(yad --width=500 --height=20 --title "Permisos para propietarios" --center --text-align=left \
+	permisospropietarios=$(yad --width=100 --height=20 --title "Permisos para propietarios" --center --text-align=left \
 	--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -14,8 +14,8 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 ) 2> /dev/null
 	while [[ $permisospropietarios -gt 7  ||  $permisospropietarios -eq "" ]]
 		do
-			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
-			permisospropietarios=$(yad --width=400 --height=50 --title "Permisos para propietarios" --center --text-align=center \
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7" --button=Recibido:0
+			permisospropietarios=$(yad --width=100 --height=20 --title "Permisos para propietarios" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -26,7 +26,7 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 		done
 	
-	permisosgrupos=$(yad --width=100 --height=150 --title "Permisos para grupos" --center --text-align=center \
+	permisosgrupos=$(yad --width=100 --height=20 --title "Permisos para grupos" --center --text-align=center \
 	--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -37,8 +37,8 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 	while [[ $permisosgrupos -gt 7  || $permisosgrupos -eq "" ]]
 		do
-			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
-			permisosgrupos=$(yad --width=100 --height=150 --title "Permisos para grupos" --center --text-align=center \
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7" --button=Recibido:0
+			permisosgrupos=$(yad --width=100 --height=20 --title "Permisos para grupos" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -48,7 +48,7 @@ function fpermisos(){
 	6 = lectura y escritura
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 		done
-	permisosotros=$(yad --width=100 --height=150 --title "Permisos para otros" --center --text-align=center \
+	permisosotros=$(yad --width=100 --height=20 --title "Permisos para otros" --center --text-align=center \
 	--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -59,8 +59,8 @@ function fpermisos(){
 	7 = lectura, escritura y ejecución" --entry --button=Establecer:0 )
 	while [[ $permisosotros -gt 7  || $permisosotros = "" ]]
 		do
-			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7"
-			permisosotros=$(yad --width=100 --height=150 --title "Permisos para otros" --center --text-align=center \
+			yad --width=100 --height=150 --center --text-align=center --column="" --text="Escriba un número entre el 0 y 7" --button=Recibido:0
+			permisosotros=$(yad --width=100 --height=20 --title "Permisos para otros" --center --text-align=center \
 			--text="Guía de permisos:
 	1 = ejecución
 	2 = escritura
@@ -101,7 +101,7 @@ function ftareas(){
 	
 	chmod 777 /etc/crontab
 	tareas=$(yad  --form --width=350 --height=420 --title "Especifica la tarea programada" --text="Ponga '*' para no seleccionar ninguna hora, mes etc..." \
-            --center --field="Minutos" --field="Horas" --field="Días del mes" --field="Mes" --field="Dia de la semana" --field="Descripción" --field="Comando" --field="Editar")   
+            --center --field="Minutos" --field="Horas" --field="Días del mes" --field="Mes" --field="Dia de la semana" --field="Descripción" --field="Comando")   
             
             ans=$?
             
@@ -183,9 +183,9 @@ Escriba <b>dantiguo</b> para recuperar en la ruta antigua
 Escriba <b>dactual</b> para recuperar en la ruta actual" --entry --button=Establecer:0)
 			
 			
-#Variable de estado  ok='n' si esto es distinto de esto sacamelo
-while [[ ( $pregunta != "borrar" ) && ( $pregunta != "dantiguo" ) && ( $pregunta != "dactual" ) && ( $pregunta = "" ) ]]
-					do
+
+while [[ $pregunta = "" ]] 
+do
 						advertencia=$(yad --width=230 --height=230 --center  --text-align=left --column="" \
 						 --text="
 Escriba <b>borrar</b> para borrar definitivamente el archivo

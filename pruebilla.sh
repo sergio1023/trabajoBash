@@ -15,8 +15,9 @@ else
 echo "mal"
 fi
 
+pregunta=$(yad --center -- width=200 --height=500 --entry)
 
-while [[ $pregunta != "borrar" || $pregunta != "dantiguo" || $pregunta != "dactual" || $pregunta = "" ]]
+while [[ $pregunta = "borrar" || $pregunta = "dantiguo" ]]
 					do
 						advertencia=$(yad --width=230 --height=230 --center  --text-align=left --column="" \
 						 --text="
@@ -29,3 +30,4 @@ while [[ $pregunta != "borrar" || $pregunta != "dantiguo" || $pregunta != "dactu
 						Escriba dantiguo para recuperar en la ruta antigua
 						Escriba dactual para recuperar en la ruta actual" --entry --button=Establecer:0)
 					done
+					
